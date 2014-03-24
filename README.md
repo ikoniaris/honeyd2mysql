@@ -1,4 +1,4 @@
-honeyd2mysql
+Honeyd2MySQL
 ============
 
-Extract data from Honeyd logs and insert them in a MySQL database
+Honeyd2MySQL is a simple script that extracts data from Honeyd logs and inserts them in a MySQL database.
