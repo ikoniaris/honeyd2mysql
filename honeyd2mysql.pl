@@ -28,11 +28,12 @@ my $sql_user = 'username';
 my $sql_password = 'password';
 my $database = 'honeyd';
 my $hostname = 'localhost';
+my $port = '3306';
 
 open(FILE, "$logfile");
 
 #Connect to the MySQL database
-my $dbh = DBI->connect("dbi:mysql:database=$database;host=$hostname;port=3306", $sql_user, $sql_password);
+my $dbh = DBI->connect("dbi:mysql:database=$database;host=$hostname;port=$port", $sql_user, $sql_password);
 
 #Create the required database table
 my $SQL = "create table connections(id integer primary key auto_increment not null, date_time datetime not null, proto varchar(4) not null, source_ip varchar(15) not null," .
