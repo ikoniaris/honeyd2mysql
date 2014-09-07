@@ -43,7 +43,7 @@ my $SQL = "CREATE TABLE connections(id integer primary key auto_increment not nu
 my $createTable = $dbh->do($SQL);
 
 print "\n Honeyd2MySQL: a simple script to populate a MySQL database with data from honeyd log files.\n";
-print "\n Depending on the size of your logfile this operation might take some minutes,\n\tseat back and relax, don't worry if your terminal seems idle for a long time.\n\n";
+print "\n Depending on the size of your logfile this operation might take some minutes,\n seat back and relax, don't worry if your terminal seems idle for a long time.\n\n";
 sleep(3);
 
 #Start parsing honeyd logfile...
