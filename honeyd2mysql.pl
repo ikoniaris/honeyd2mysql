@@ -24,21 +24,23 @@ use DBI;
 my $logfile='/var/log/honeypot/honeyd.log';
 
 #MySQL server values - change accordingly!
-my $sql_user = 'username';
-my $sql_password = 'password';
-my $database = 'honeyd';
-my $hostname = 'localhost';
-my $port = '3306';
+my $mysql_user = 'username';
+my $mysql_password = 'password';
+my $mysql_database = 'honeyd';
+my $mysql_ip = '127.0.0.1';
+my $mysql_port = '3306';
 
 open(FILE, "$logfile");
 
 #Connect to the MySQL database
-my $dbh = DBI->connect("dbi:mysql:database=$database;host=$hostname;port=$port", $sql_user, $sql_password);
+my $dbh = DBI->connect("dbi:mysql:database=$mysql_database;host=$mysql_ip;port=$mysql_port", $mysql_user, $mysql_password);
 
 #Create the required database table
-my $SQL = "create table connections(id integer primary key auto_increment not null, date_time datetime not null, proto varchar(4) not null, source_ip varchar(15) not null," .
+my $SQL = "DROP TABLE IF EXISTS connections";
+my $dropTable = $dbh->do($SQL);
+my $SQL = "CREATE TABLE connections(id integer primary key auto_increment not null, date_time datetime not null, proto varchar(4) not null, source_ip varchar(15) not null," .
 	"source_port integer not null, dest_ip varchar(15) not null, dest_port integer not null)";
-my $CreateTable = $dbh->do($SQL);
+my $createTable = $dbh->do($SQL);
 
 print "\n\tHoneyd2MySQL: a simple script to populate a MySQL database with data from honeyd log files.\n";
 print "\n\tDepending on the size of your logfile this operation might take some minutes,\n\tseat back and relax, don't worry if your terminal seems idle for a long time.\n\n";
@@ -87,8 +89,9 @@ print "Check passed - OK\n";
 } #while
 
 #Fix protocol column (if any) and remove trailing ':' from dest_ip for icmp connections
-$dbh->do("UPDATE connections set proto = 'udp' where proto='';");
-$dbh->do("UPDATE connections set dest_ip = substring(dest_ip, 1, length(dest_ip)-1) where proto='icmp';");
+$dbh->do("UPDATE connections SET proto = 'udp' WHERE proto='';");
+$dbh->do("UPDATE connections SET dest_ip = SUBSTRING(dest_ip, 1, LENGTH(dest_ip)-1) WHERE proto='icmp';");
 
 close(FILE);
 
+#End
