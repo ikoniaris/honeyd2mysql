@@ -42,8 +42,8 @@ my $SQL = "CREATE TABLE connections(id integer primary key auto_increment not nu
 	"source_port integer not null, dest_ip varchar(15) not null, dest_port integer not null)";
 my $createTable = $dbh->do($SQL);
 
-print "\n\tHoneyd2MySQL: a simple script to populate a MySQL database with data from honeyd log files.\n";
-print "\n\tDepending on the size of your logfile this operation might take some minutes,\n\tseat back and relax, don't worry if your terminal seems idle for a long time.\n\n";
+print "\n Honeyd2MySQL: a simple script to populate a MySQL database with data from honeyd log files.\n";
+print "\n Depending on the size of your logfile this operation might take some minutes,\n\tseat back and relax, don't worry if your terminal seems idle for a long time.\n\n";
 sleep(3);
 
 #Start parsing honeyd logfile...
